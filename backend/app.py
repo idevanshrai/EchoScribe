@@ -9,14 +9,22 @@ from summarizer import load_summarizer, summarize_text
 
 from typing import Optional
 from faster_whisper import WhisperModel
+from fastapi.middleware.cors import CORSMiddleware
 
-_ASR: Optional[WhisperModel] = None
-
-
+# Single app instance
 app = FastAPI(title="Voice-to-Notes Offline API")
 
+# Allow frontend to talk to backend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # for dev, allow all. Later, restrict to frontend URL
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # Lazy globals
-_ASR = None
+_ASR: Optional[WhisperModel] = None
 _SUMM = None
 
 def ensure_models():
@@ -38,7 +46,6 @@ def convert_to_wav_mono_16k(src_path: str) -> str:
 async def transcribe(audio: UploadFile = File(...)):
     ensure_models()
     try:
-        # Save upload to temp
         with tempfile.NamedTemporaryFile(delete=False) as tmp:
             data = await audio.read()
             tmp.write(data)

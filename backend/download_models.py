@@ -1,37 +1,27 @@
-import os
 from huggingface_hub import snapshot_download
+import os
 
-# Download locations (kept inside project so you can stay offline later)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODELS_DIR = os.path.join(BASE_DIR, "models")
-os.makedirs(MODELS_DIR, exist_ok=True)
 
-# 1) Faster-Whisper (CTranslate2) model (small is a good balance on Apple Silicon)
-ASR_REPO = "Systran/faster-whisper-small"
-
-# 2) Summarizer model (DistilBART CNN)
-SUMM_REPO = "sshleifer/distilbart-cnn-12-6"
-
-def main():
-    print(f"Downloading ASR model: {ASR_REPO}")
-    asr_path = snapshot_download(
-        repo_id=ASR_REPO,
+def download_asr_model():
+    print("Downloading ASR model: Systran/faster-whisper-small")
+    snapshot_download(
+        repo_id="Systran/faster-whisper-small",
         local_dir=os.path.join(MODELS_DIR, "faster-whisper-small"),
-        local_dir_use_symlinks=False,
-        revision=None,
+        local_dir_use_symlinks=False
     )
-    print("ASR model saved to:", asr_path)
 
-    print(f"Downloading summarizer model: {SUMM_REPO}")
-    sum_path = snapshot_download(
-        repo_id=SUMM_REPO,
-        local_dir=os.path.join(MODELS_DIR, "distilbart-cnn-12-6"),
-        local_dir_use_symlinks=False,
-        revision=None,
+def download_summarizer_model():
+    print("Downloading summarizer model: philschmid/bart-large-cnn-samsum")
+    snapshot_download(
+        repo_id="philschmid/bart-large-cnn-samsum",
+        local_dir=os.path.join(MODELS_DIR, "samsum-bart"),
+        local_dir_use_symlinks=False
     )
-    print("Summarizer model saved to:", sum_path)
-
-    print("All set. You can now run fully offline.")
 
 if __name__ == "__main__":
-    main()
+    os.makedirs(MODELS_DIR, exist_ok=True)
+    download_asr_model()
+    download_summarizer_model()
+    print("✅ All models downloaded locally into ./models/")
