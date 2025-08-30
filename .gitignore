@@ -1,33 +1,24 @@
-# macOS
 .DS_Store
-
-# Python cache
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 
-# Virtual environments
 .venv/
 backend/.venv/
 
-# Model files (large, not for git)
 backend/models/
 *.bin
 *.pt
 *.onnx
 *.msgpack
 
-# Audio test files
 *.wav
 *.mp3
 *.aiff
 *.m4a
 
-# Logs / temp
 *.log
 *.tmp
 *.temp
-
-# Jupyter notebooks checkpoints (if you ever use them)
 .ipynb_checkpoints/
