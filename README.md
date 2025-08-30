@@ -1,6 +1,6 @@
 # 🎙️ EchoScribe (Voice-to-Notes Offline)
 
-Voice Notes Offline is a lightweight backend service that lets you **transcribe and summarize audio locally** — no internet, no external APIs. Powered by modern speech recognition and summarization models, it’s ideal for privacy-focused note-taking, research, and productivity.
+EchoScribe is a lightweight backend service that lets you **transcribe and summarize audio locally** — no internet, no external APIs. Powered by modern speech recognition and summarization models, it’s ideal for privacy-focused note-taking, research, and productivity.
 
 ---
 
